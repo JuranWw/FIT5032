@@ -10,26 +10,58 @@
       <h3>Iterating through Arrays</h3>
       <!-- Activity 6: Render a list containing author names and their birth years. Hint: Make use of the v-for directive to iterate through the array of authors. -->
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
-      
+      <ul>
+        <li v-for="author in authors" :key="author.id">
+          {{ author.name }} ({{ author.birthYear }})
+        </li>
+      </ul>
+
       <h3>Filtering Arrays</h3>
       <!-- Activity 7: Render a list containing authors born after 1850. Hint: Make use of the v-for directive to iterate through the array of authors that you have filtered out. -->
       <p>Authors born after 1850:</p>
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
+      <ul>
+        <li v-for="author in modernAuthors" :key="author.id"> 
+          {{ author.name }} ({{ author.birthYear }})
+        </li>
+      </ul>
 
       <h3>Mapping Arrays</h3>
       <p>Famous works:</p>
-      <ul>
-        <!-- Activity 8: Render a list of all famous works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
-        <!-- TODO: CODE TO RENDER LIST OF FAMOUS WORKS HERE -->
+      <!-- Activity 8: Render a list of all famous works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
+      <!-- TODO: CODE TO RENDER LIST OF FAMOUS WORKS HERE -->
+      <ul> 
+        <li v-for="work in allFamousWorks" :key="work">
+          {{ work }}
+        </li>
       </ul>
 
       <h3>Finding in Arrays</h3>
-      <p>Finding by property: {{ orwell?.name }}</p>
+      <p v-for="author in orwell" :key="author.id">Finding by property: 
+        <!-- {{ orwell?.name }}  -->
+        {{ author.name }}
+      </p>
+      <ul> 
+        <li v-for="author in orwell" :key="author.id">
+          {{ author.famousWorks }}
+        </li>
+      </ul>
 
       <h3>Nested Arrays/Objects</h3>
-      <p>{{ austen?.name }}'s works:</p>
+      <p v-for="author in austen" :key="author.id">
+        <!-- {{ austen?.name }} -->
+        {{ author.name }}
+        's works:
+      </p>
       <!-- Activity 9: Render a list of Austen's works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
       <!-- TODO: CODE TO RENDER LIST OF AUSTEN'S WORKS HERE -->
+      <ul> 
+        <section v-for="author in austen" :key="author.id">
+          <li v-for="work in author.famousWorks" :key="work">
+            {{ work.title }}
+          </li>
+        </section>
+      </ul>
     </section>
 
     <section class="lab-section">
@@ -95,24 +127,28 @@ import bookstores from "../assets/json/bookstores.json"
 const showMessage = ref(false)
 
 // Activity 2: Get authors born after 1850
-const modernAuthors = computed(() => {
+const modernAuthors = computed(() => 
   // TODO: CODE TO FILTER ARRAY OF AUTHORS HERE
-})
+  authors.filter((author) => author.birthYear > 1850)
+);
 
 // Activity 3: Get all famous works
-const allFamousWorks = computed(() => {
+const allFamousWorks = computed(() => 
   // TODO: CODE TO GET ALL FAMOUS WORKS HERE
-})
+  authors.flatMap((author) => author.famousWorks.map((work) => work.title))
+);
 
 // Activity 4: Find author by name
-const orwell = computed(() => {
+const orwell = computed(() => 
   // TODO: CODE TO FIND AUTHOR BY NAME HERE
-})
+  authors.filter((author) => author.name == "George Orwell")
+);
 
 // Activity 5: Find author by ID
-const austen = computed(() => {
+const austen = computed(() => 
   // TODO: CODE TO FIND AUTHOR BY ID HERE
-})
+  authors.filter((author) => author.id == 1)
+);
 </script>
 
 <style scoped>
@@ -134,6 +170,10 @@ p {
 }
 h1 {
   text-align: center;
+}
+h2,
+h3 {
+  font-weight: bold;
 }
 
 .lab-section {
@@ -176,5 +216,6 @@ li {
   padding: 10px;
   margin: 5px 0;
   border-radius: 5px;
+  color:#333;
 }
 </style>
