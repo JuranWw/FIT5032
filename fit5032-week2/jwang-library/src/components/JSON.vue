@@ -127,7 +127,9 @@ const austen = computed(() => {
 }
 
 h1,
-h2 {
+h2,
+h3,
+p {
   color: #333;
 }
 h1 {
