@@ -1,47 +1,33 @@
-<script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
-</script>
-
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-       <!-- FIT5032 <br> Internet application development <br> -->
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
-      <!-- <a href="https://learning.monash.edu/course/view.php?id=19968" target="_blank" rel="noopener">Moodle</a> &  -->
-      <!-- <a href="https://handbook.monash.edu/2024/units/FIT5032" target="_blank" rel="noopener">Handbook</a>. -->
-    </h3>
+  <div class = "myName">
+    Juran Wang
   </div>
+  
+  <a id = "link" href="https://github.com/JuranWw" target="_blank" rel="noopener">
+    GitHub URL
+  </a>
+  
 </template>
 
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
+<style>
+.myName {
+  font-size: 2.1rem;
+  font-weight: 300;
+  font-style:oblique;
+  width: 20rem;
+  margin: 1rem;
+  position:absolute;
+  top:37rem;
+  left: 20rem;
+  color: var(--color-heading);
 }
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+#link{
+  font-size: 1.3rem;
+  font-weight: 250;
+  width: 20rem;
+  margin: 1rem;
+  position:absolute;
+  top:40rem;
+  left: 20rem;
 }
 </style>
