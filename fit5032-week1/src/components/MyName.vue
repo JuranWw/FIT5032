@@ -1,6 +1,15 @@
+<script setup>
+defineProps({
+  name: {
+    type: String,
+    required: true
+  }
+})
+</script>
+
 <template>
   <div class = "myName">
-    Juran Wang
+    {{ name }}
   </div>
   
   <a id = "link" href="https://github.com/JuranWw" target="_blank" rel="noopener">

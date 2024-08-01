@@ -1,4 +1,5 @@
 <!-- JSONLab.vue -->
+
 <template>
   <div class="json-lab">
     <h1>🗄️ JSON Data & Vue Directives Lab</h1>

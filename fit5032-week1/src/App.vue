@@ -11,8 +11,10 @@ import MyName from './components/MyName.vue'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
     </div>
-
-    <MyName />
+    <div>
+      <MyName name="Juran Wang"/>
+    </div>
+    
   </header>
 
   <main>
