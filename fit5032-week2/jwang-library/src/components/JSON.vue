@@ -139,14 +139,46 @@
     <section class="lab-section">
       <h2>Attribute, Class and Style Binding with <code>v-bind</code></h2>
       <p>Highlighting Specific Authors:</p>
+
       <!-- Class binding -->
-      <div>
-        <button :class="{ active: isActive}">>Toggle<</button>
-      </div>
+      <!-- <div>
+        <button :class="{ active: isActive }">>Toggle<</button>
+      </div> -->
       <!-- Style binding -->
-      <div :style="{ color: textColor, fontSize: fontSize + 'px'}">
+      <!-- <div :style="{ color: textColor, fontSize: fontSize + 'px'}">
         Dynamic Style        
-      </div>
+      </div> -->
+      <!-- <div  @click="highlightName = !highlightName">
+        <p v-if="!highlightName" class="success">HelloWorld</p>
+        <div v-else>HelloWorld</div>
+      </div> -->
+      <!-- <p v-if="highlightName" class="success"> <p>HelloWorld</p></p> -->
+
+      <!-- Author-highlight functionality -->
+      <ul>
+        <div>
+          <li>
+            {{ authors[0].name }}
+          </li>
+        </div>
+        
+        <div  @click="highlightName = !highlightName">
+          <li v-if="!highlightName" :style="{backgroundColor: backgroundColor, color: textColor, border: boarder}">
+            {{ authors[1].name }}
+          </li>
+          <li v-else >
+            {{ authors[1].name }}
+          </li>
+        </div>
+
+        <div>
+          <li>
+            {{ authors[2].name }}
+          </li>
+        </div>
+      </ul>
+
+      
     </section>
   </div>
 </template>
@@ -185,9 +217,27 @@ const austen = computed(() =>
   authors.filter((author) => author.id == 1)
 );
 
-const isACtive = ref(true);
-const textColor = ref('blue');
-const fontSize = ref(18)
+// Author-highlighting with reactives
+const backgroundColor = ref('#ffdce4');
+const boarder = ref('1px solid #ad324e');
+const textColor = ref('#ad324e');
+const highlightName = ref(true);
+
+// const highlight = 'highlightBlue';
+// const isACtive = ref(true);
+// const fontSize = ref(18)
+
+
+// Get the number of authors in the array
+// const numberOfAuthors = authors.length;
+// Initialise all the highlight status to false
+// var newArray = [];
+// for(let i = 0; i < numberOfAuthors; i++){
+//   newArray.push([authors[i].name, false])
+// }
+// const highlightAuthorArray = newArray;
+// const highlightAuthorArray = Array.from({length: numberOfAuthors}, (value, index) => ref(false));
+
 </script>
 
 <style scoped>
@@ -213,6 +263,12 @@ h1 {
 h2,
 h3 {
   font-weight: bold;
+}
+
+.highlightBlue {
+  background-color: #ffdce4;
+  color: #ad324e;
+  border: 1px solid #ad324e;
 }
 
 .lab-section {
