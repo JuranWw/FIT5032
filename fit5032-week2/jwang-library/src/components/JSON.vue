@@ -92,8 +92,10 @@
       <!-- Activity 10: Iterate through the storeTypes array and display the store type and the number of stores that use that type. -->
       <!-- TODO: CODE TO RENDER LIST OF STORE TYPES HERE -->
       <ul> 
-          <li v-for="type in bookstores.storeTypes" :key="type">
-            {{ type }}
+          <li v-for="(number, type) in bookstores.storeTypes" :key="type">
+            {{type}} 
+            : 
+            {{number}}
           </li>
       </ul>
 
@@ -101,6 +103,15 @@
       <p>Opening Hours:</p>
       <!-- Activity 11: Iterate throu5ngh the openingHours object and display the day of the week and the opening and closing times. -->
       <!-- TODO: CODE TO RENDER LIST OF OPENING HOURS HERE -->
+      <ul> 
+          <li v-for="(openingHours, section) in bookstores.openingHours" :key="section">
+            {{section}}
+            : 
+            <li v-for="(time, title) in openingHours" :key="title">
+              {{ title }} : {{ time }}
+            </li> 
+          </li>
+      </ul>
 
       <h3>Working with Arrays in Objects</h3>
       <!-- Activity 12: Get the top sellers from the bookstores object. -->
