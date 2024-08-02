@@ -101,7 +101,7 @@
 
       <h3>Nested Objects</h3>
       <p>Opening Hours:</p>
-      <!-- Activity 11: Iterate throu5ngh the openingHours object and display the day of the week and the opening and closing times. -->
+      <!-- Activity 11: Iterate through the openingHours object and display the day of the week and the opening and closing times. -->
       <!-- TODO: CODE TO RENDER LIST OF OPENING HOURS HERE -->
       <ul> 
           <li v-for="(openingHours, section) in bookstores.openingHours" :key="section">
@@ -117,7 +117,13 @@
       <!-- Activity 12: Get the top sellers from the bookstores object. -->
       <!-- TODO: CODE TO GET TOP SELLERS HERE -->
       <p>We operate in:</p>
-      <p>Our #1 seller:</p>
+      <p v-for="country in bookstores.countries" :key="country">
+       {{ country }}
+      </p>
+
+      <p>Our #1 seller:
+        {{ bookstores.topSellers[0] }}
+      </p>
     </section>
 
     <section class="lab-section">
@@ -126,14 +132,21 @@
       <!-- Activity 13: Toggle the message visibility when the button is clicked. -->
       <!-- TODO: CODE TO TOGGLE MESSAGE VISIBILITY HERE. Hint: Use the v-if directive. -->
       <button @click="showMessage = !showMessage">Toggle Message</button>
-      <p class="message success">✨ You're a Vue superstar! ✨</p>
+      <p v-if="showMessage" class="message success">✨ You're a Vue superstar! ✨</p>
       <p>Click the button to see a message.</p>
     </section>
 
     <section class="lab-section">
       <h2>Attribute, Class and Style Binding with <code>v-bind</code></h2>
       <p>Highlighting Specific Authors:</p>
-
+      <!-- Class binding -->
+      <div>
+        <button :class="{ active: isActive}">>Toggle<</button>
+      </div>
+      <!-- Style binding -->
+      <div :style="{ color: textColor, fontSize: fontSize + 'px'}">
+        Dynamic Style        
+      </div>
     </section>
   </div>
 </template>
@@ -171,6 +184,10 @@ const austen = computed(() =>
   // TODO: CODE TO FIND AUTHOR BY ID HERE
   authors.filter((author) => author.id == 1)
 );
+
+const isACtive = ref(true);
+const textColor = ref('blue');
+const fontSize = ref(18)
 </script>
 
 <style scoped>
