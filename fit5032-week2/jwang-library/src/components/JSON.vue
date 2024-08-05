@@ -47,8 +47,7 @@
           <li v-for="work in author.famousWorks" :key="work">
             {{ work.title }}
           </li>
-        </section>
-        
+        </section> 
       </ul>
 
       <h3>Nested Arrays/Objects</h3>
@@ -214,10 +213,10 @@ const orwell = computed(() =>
 // Activity 5: Find author by ID
 const austen = computed(() => 
   // TODO: CODE TO FIND AUTHOR BY ID HERE
-  authors.filter((author) => author.id == 1)
+  authors.filter((author) => author.id === 1)
 );
 
-// Author-highlighting with reactives
+// Initialise const for data binding in Author-highlighting 
 const backgroundColor = ref('#ffdce4');
 const boarder = ref('1px solid #ad324e');
 const textColor = ref('#ad324e');
