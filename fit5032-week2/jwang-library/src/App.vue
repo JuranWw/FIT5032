@@ -14,9 +14,9 @@ import Form from './components/Form.vue'
     </div>
     
   </header> -->
-  <!-- <JSON /> -->
+  <JSON />
 
-  <Form />
+  <!-- <Form /> -->
   
   <!-- <main>
     <TheWelcome />
