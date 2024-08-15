@@ -6,7 +6,7 @@
                 <form @submit.prevent="submitForm">
                     
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" 
                                 @blur="() => validateName(true)"
@@ -16,7 +16,7 @@
                             <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" 
                                 @blur="() => validatePassword(true)"
@@ -28,35 +28,65 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-2 col-sm-2">
+                            <!-- <div>Australian resident?</div>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input"
                                 id="isAustralian" v-model="formData.isAustralian">
-                                <label class="form-check-label" for="isAustralian">Australian Resident?</label>
+                                <label class="form-check-label" for="isAustralian">Yes</label>
                             </div>
-                        </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input"
+                                id="notAustralian" v-model="formData.isAustralian">
+                                <label class="form-check-label" for="notAustralian">No/Not Sure</label>
+                            </div> -->
 
-                        <div class="col-md-6">
+                            <div>Australian Resident?</div>
+                            <input type="radio" id="true" value="True" 
+                            v-model="formData.isAustralian" />
+                            <label for="one">Yes</label>
+                                                       
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <br>
+                            <input type="radio" id="false" value="Flase"
+                            v-model="formData.isAustralian" />
+                            <label for="two">No</label>
+                            
+                        </div>
+                        
+
+                        <div class="col-md-6 col-sm-6">
                             <label for="gender" class="form-label">Gender</label>
-                            <select class="form-select" id="gender" v-model="formData.gender">
+                            <select class="form-select" id="gender" 
+                                @blur="() => validateGender(true)"
+                            v-model="formData.gender">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </select>
+                            <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
                         </div>
+
+                        <div v-if="errors.resident" class="text-danger">{{ errors.resident }}</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="reason" class="form-label">Reason for Joining</label>
-                        <textarea class="form-control" id="reason" rows="3" v-model="formData.reason"></textarea>
+                        <textarea class="form-control" id="reason" rows="3" 
+                            @blur="() => validateReason(true)"
+                            @input="() => validateReason(false)"
+                        v-model="formData.reason"></textarea>
+                        <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                        <button type="button" class="btn btn-secondary" @click="clearForm">clear</button>
+                        <button type="submit" class="btn btn-primary me-2" @click="() => validateResident()">Submit</button>
+                        <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
                     </div>
                     
-                    <!-- <div class="row mt-5" v-if="submittedCards.length">
+                    <div class="row mt-5" v-if="submittedCards.length">
                         <div class="d-flex flex-wrap justify-content-start">
                             <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
                                 <div class="card-header">
@@ -65,15 +95,15 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">Username: {{ card.username }}</li>
                                     <li class="list-group-item">Password: {{ card.password }}</li>
-                                    <li class="list-group-item">Australian Resident: {{ card.isAustralian ? 'Yes' : 'No' }}</li>
+                                    <li class="list-group-item">Australian Resident: {{ card.isAustralian }}</li>
                                     <li class="list-group-item">Gender: {{ card.gender }}</li>
                                     <li class="list-group-item">Reason: {{ card.reason }}</li>
                                 </ul>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     
-                    <br>
+                    <!-- <br>
                     <div>
                         <DataTable :value="submittedCards" tableStyle="min-width: 50rem">
                             <Column field="username" header="Username"></Column>
@@ -81,9 +111,8 @@
                             <Column field="isAustralian" header="Australian Resident"></Column>
                             <Column field="gender" header="Gender"></Column>
                             <Column field="reason" header="Reason"></Column>
-                            <!-- <Column v-for="col of columns" :key="col.field" :field="col.field" :header="col.header"></Column> -->
                         </DataTable>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </div>
@@ -123,7 +152,7 @@ import { ref } from 'vue';
 const formData = ref({
     username: '',
     password: '',
-    isAustralian: false,
+    isAustralian: '',
     reason: '',
     gender: ''
 });
@@ -133,30 +162,31 @@ const submittedCards = ref([]);
 const submitForm = () => {
     validateName(true);
     validatePassword(true);
-    if(!errors.value.username && !errors.value.password){
+    if(!errors.value.username && !errors.value.password 
+    && !errors.value.gender && !errors.value.reason
+    && !errors.resident){
         submittedCards.value.push({
             ...formData.value
         });
-        clearForm();
+        // clearFormData();
     }
 };
 
-// Implement computed property to clear the cards
-// const clearForm = () =>{
-//     submittedCards.value.pop({
-//         ...formData.value
-//     });
-// }
 
+// Implement functionality to clear the cards
 const clearForm = () =>{
+    submittedCards.value.pop();
+}
+
+const clearFormData = () =>{
     formData.value = {
         username: '',
         password: '',
-        isAustralian: false,
+        isAustralian: '',
         reason: '',
         gender: ''
     }
-}
+};
 
 const errors = ref({
     username: null,
@@ -194,6 +224,30 @@ const validatePassword = (blur) => {
         if(blur) errors.value.password = "Password must contain at least one special character.";
     }else{
         errors.value.password = null;
+    }
+};
+
+const validateGender = (blur) => {
+    if(! formData.value.gender){
+        errors.value.gender = "You must select the gender."
+    }else{
+        errors.value.gender = null;
+    }
+};
+
+const validateReason = (blur) => {
+    if(! formData.value.reason){
+        errors.value.reason = "Reason can not be black."
+    }else{
+        errors.value.reason = null;
+    }
+};
+
+const validateResident = (submit) => {
+    if(! formData.value.isAustralian){
+        errors.value.resident = "You must select an option."
+    }else{
+        errors.value.resident = "No error at all";
     }
 };
 
