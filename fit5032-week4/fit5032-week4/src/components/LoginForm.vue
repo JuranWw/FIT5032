@@ -86,7 +86,7 @@
                         <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
                     </div>
                     
-                    <div class="row mt-5" v-if="submittedCards.length">
+                    <!-- <div class="row mt-5" v-if="submittedCards.length">
                         <div class="d-flex flex-wrap justify-content-start">
                             <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
                                 <div class="card-header">
@@ -101,9 +101,9 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
-                    <!-- <br>
+                    <br>
                     <div>
                         <DataTable :value="submittedCards" tableStyle="min-width: 50rem">
                             <Column field="username" header="Username"></Column>
@@ -112,7 +112,7 @@
                             <Column field="gender" header="Gender"></Column>
                             <Column field="reason" header="Reason"></Column>
                         </DataTable>
-                    </div> -->
+                    </div>
                 </form>
             </div>
         </div>
@@ -162,14 +162,16 @@ const submittedCards = ref([]);
 const submitForm = () => {
     validateName(true);
     validatePassword(true);
-    if(!errors.value.username && !errors.value.password 
-    && !errors.value.gender && !errors.value.reason
-    && !errors.resident){
+    validateResident(true);
+    validateGender(true);
+    validateReason(true);
+    if(!errors.value.username && !errors.value.password && !errors.value.gender && !errors.value.reason && !errors.value.resident){
         submittedCards.value.push({
             ...formData.value
         });
-        // clearFormData();
+        clearFormData();
     }
+    
 };
 
 
@@ -247,7 +249,7 @@ const validateResident = (submit) => {
     if(! formData.value.isAustralian){
         errors.value.resident = "You must select an option."
     }else{
-        errors.value.resident = "No error at all";
+        errors.value.resident = null;
     }
 };
 
