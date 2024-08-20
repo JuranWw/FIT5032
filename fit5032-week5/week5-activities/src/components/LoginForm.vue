@@ -91,6 +91,7 @@
                             @input="() => validateReason(false)"
                         v-model="formData.reason"></textarea>
                         <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
+                        <div v-if="prompt.reason" class="prompt">{{ prompt.reason }}</div>
                     </div>
 
                     <div class="text-center">
@@ -214,6 +215,10 @@ const errors = ref({
     reason: null,
 });
 
+const prompt = ref({
+    reason: null,
+});
+
 const validateName = (blur) => {
     if (formData.value.username.length < 3){
         if(blur) errors.value.username = "Name must be at least 3 characters";
@@ -262,8 +267,12 @@ const validateGender = (blur) => {
 };
 
 const validateReason = (blur) => {
-    if(! formData.value.reason){
-        errors.value.reason = "Reason can not be black."
+    const minLength = 10;
+    if(formData.value.reason.includes('friend')){
+        prompt.value.reason = "Great to have a friend"
+    }
+    if(formData.value.reason.length < minLength){
+        errors.value.reason = "Reason must be at leaast 10 characters."
     }else{
         errors.value.reason = null;
     }
@@ -294,5 +303,8 @@ const validateResident = (submit) => {
    }
    .list-group-item {
    padding: 10px;
+   }
+   .prompt{
+    color:rgb(0, 88, 0);
    }
 </style>
