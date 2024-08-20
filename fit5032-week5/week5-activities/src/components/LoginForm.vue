@@ -2,7 +2,7 @@
     <div clsss="container mt-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <h1 class="text-center">User Information Form</h1>
+                <h1 class="text-center">W5. Library Registration Form</h1>
                 <form @submit.prevent="submitForm">
                     
                     <div class="row mb-3">
@@ -17,6 +17,18 @@
                         </div>
 
                         <div class="col-md-6 col-sm-6">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select class="form-select" id="gender" 
+                                @blur="() => validateGender(true)"
+                            v-model="formData.gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" 
                                 @blur="() => validatePassword(true)"
@@ -25,6 +37,16 @@
 
                             <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
                         </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <label for="confirm-password" class="form-label">Confirm password</label>
+                            <input type="password" class="form-control" id="confirm-password" 
+                                @blur="() => validateConfirmPassword(true)"
+                            v-model="formData.confirmPassword">
+
+                            <div v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</div>
+                        </div>
+
                     </div>
 
                     <div class="row mb-3">
@@ -57,17 +79,7 @@
                         </div>
                         
 
-                        <div class="col-md-6 col-sm-6">
-                            <label for="gender" class="form-label">Gender</label>
-                            <select class="form-select" id="gender" 
-                                @blur="() => validateGender(true)"
-                            v-model="formData.gender">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
-                        </div>
+                        
 
                         <div v-if="errors.resident" class="text-danger">{{ errors.resident }}</div>
                     </div>
@@ -152,6 +164,7 @@ import { ref } from 'vue';
 const formData = ref({
     username: '',
     password: '',
+    confirmPassword: '',
     isAustralian: '',
     reason: '',
     gender: ''
@@ -185,6 +198,7 @@ const clearFormData = () =>{
     formData.value = {
         username: '',
         password: '',
+        confirmPassword: '',
         isAustralian: '',
         reason: '',
         gender: ''
@@ -194,6 +208,7 @@ const clearFormData = () =>{
 const errors = ref({
     username: null,
     password: null,
+    confirmPassword: null,
     resident: null,
     gender: null,
     reason: null,
@@ -229,6 +244,14 @@ const validatePassword = (blur) => {
         errors.value.password = null;
     }
 };
+
+const validateConfirmPassword = (blur) => {
+  if (formData.value.password !== formData.value.confirmPassword) {
+    if (blur) errors.value.confirmPassword = 'Passwords do not match.'
+  } else {
+    errors.value.confirmPassword = null
+  }
+}
 
 const validateGender = (blur) => {
     if(! formData.value.gender){
