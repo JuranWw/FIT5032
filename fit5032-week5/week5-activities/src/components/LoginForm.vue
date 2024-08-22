@@ -51,35 +51,20 @@
 
                     <div class="row mb-3">
                         
-                        <div class="col-md-2 col-sm-2">
-                            <!-- <div>Australian resident?</div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input"
-                                id="isAustralian" v-model="formData.isAustralian">
-                                <label class="form-check-label" for="isAustralian">Yes</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input"
-                                id="notAustralian" v-model="formData.isAustralian">
-                                <label class="form-check-label" for="notAustralian">No/Not Sure</label>
-                            </div> -->
-
-                            <div>Australian Resident?</div>
+                        <div class="col-md-6 col-sm-12">
+                            <div>Australian Resident?</div>                 
+                        </div>
+                    
+                        <div class="col-md-6 col-sm-12">
                             <input type="radio" id="true" value="True" 
                             v-model="formData.isAustralian" />
                             <label for="one">Yes</label>
-                                                       
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <br>
+
                             <input type="radio" id="false" value="Flase"
                             v-model="formData.isAustralian" />
                             <label for="two">No</label>
-                            
+                        
                         </div>
-                        
-
-                        
 
                         <div v-if="errors.resident" class="text-danger">{{ errors.resident }}</div>
                     </div>
@@ -97,6 +82,11 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2" @click="() => validateResident()">Submit</button>
                         <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="reason" class="form-label">Suburb</label>
+                        <input type="text" class="form-control" id="suburb" v-bind:value="formData.suburb" />
                     </div>
                     
                     <!-- <div class="row mt-5" v-if="submittedCards.length">
@@ -168,7 +158,8 @@ const formData = ref({
     confirmPassword: '',
     isAustralian: '',
     reason: '',
-    gender: ''
+    gender: '',
+    suburb: 'Clayton',
 });
 
 const submittedCards = ref([]);
@@ -267,8 +258,9 @@ const validateGender = (blur) => {
 };
 
 const validateReason = (blur) => {
+    const keyWord = 'friend';
     const minLength = 10;
-    if(formData.value.reason.includes('friend')){
+    if(formData.value.reason.toUpperCase().includes(keyWord.toUpperCase())){
         prompt.value.reason = "Great to have a friend"
     }
     if(formData.value.reason.length < minLength){
@@ -306,5 +298,8 @@ const validateResident = (submit) => {
    }
    .prompt{
     color:rgb(0, 88, 0);
+   }
+   #false{
+    margin-left: 100px;
    }
 </style>
