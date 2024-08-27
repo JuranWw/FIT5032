@@ -1,9 +1,17 @@
 <script setup>
-import LoginForm from './components/LoginForm.vue';
+import BHeader from './components/BHeader.vue'
 </script>
 
 <template>
-  <LoginForm/>
+  <div class="main-container">
+    <header>
+      <BHeader />
+    </header>
+  </div>
+
+  <div class="main-box">
+    <router-view></router-view>
+  </div>
 </template>
 
 <style scoped>
