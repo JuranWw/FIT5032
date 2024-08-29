@@ -39,9 +39,7 @@
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-primary me-2" @click="() => validateResident()">
-              Login
-            </button>
+            <button type="submit" class="btn btn-primary me-2">Login</button>
           </div>
         </form>
       </div>
@@ -52,15 +50,17 @@
 <script setup>
 // Our logic will go here
 import { ref } from 'vue'
+import Varify from '../router/index'
+import { Verify, Check } from '../router/index'
+
+const loginCredentials = {
+  username: 'username',
+  password: 'Password123!'
+}
 
 const formData = ref({
   username: '',
-  password: '',
-  confirmPassword: '',
-  isAustralian: '',
-  reason: '',
-  gender: '',
-  suburb: 'Clayton'
+  password: ''
 })
 
 const submittedCards = ref([])
@@ -68,16 +68,8 @@ const submittedCards = ref([])
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
-  validateResident(true)
-  validateGender(true)
-  validateReason(true)
-  if (
-    !errors.value.username &&
-    !errors.value.password &&
-    !errors.value.gender &&
-    !errors.value.reason &&
-    !errors.value.resident
-  ) {
+  verifyPassword()
+  if (!errors.value.username && !errors.value.password) {
     submittedCards.value.push({
       ...formData.value
     })
@@ -86,32 +78,15 @@ const submitForm = () => {
 }
 
 // Implement functionality to clear the cards
-const clearForm = () => {
-  submittedCards.value.pop()
-}
-
 const clearFormData = () => {
   formData.value = {
     username: '',
-    password: '',
-    confirmPassword: '',
-    isAustralian: '',
-    reason: '',
-    gender: ''
+    password: ''
   }
 }
-
 const errors = ref({
   username: null,
-  password: null,
-  confirmPassword: null,
-  resident: null,
-  gender: null,
-  reason: null
-})
-
-const prompt = ref({
-  reason: null
+  password: null
 })
 
 const validateName = (blur) => {
@@ -142,6 +117,17 @@ const validatePassword = (blur) => {
     if (blur) errors.value.password = 'Password must contain at least one special character.'
   } else {
     errors.value.password = null
+  }
+}
+
+const verifyPassword = () => {
+  if (
+    loginCredentials.username == formData.value.username &&
+    loginCredentials.password == formData.value.password
+  ) {
+    Verify()
+    console.log(Check())
+  } else {
   }
 }
 </script>

@@ -2,6 +2,17 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import LoginView from '@/views/LoginView.vue'
+import { ref } from 'vue'
+
+const isAuthenticated = ref(false)
+
+export function Verify() {
+  isAuthenticated.value = true
+}
+
+export function Check() {
+  return isAuthenticated
+}
 
 const routes = [
   {
@@ -12,7 +23,16 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: AboutView
+    component: AboutView,
+
+    beforeEnter: (to, from, next) => {
+      console.log(isAuthenticated.value)
+      if (isAuthenticated.value) {
+        next()
+      } else {
+        next(false)
+      }
+    }
   },
   {
     path: '/login',
