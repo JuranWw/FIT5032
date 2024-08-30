@@ -1,5 +1,5 @@
 <template>
-  <div clsss="container mt-5">
+  <div v-if="!Check()" clsss="container mt-5">
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <h1 class="text-center">Log in</h1>
@@ -44,6 +44,9 @@
         </form>
       </div>
     </div>
+  </div>
+  <div v-else clsss="container mt-10">
+    <h1 class="text-center">You have logged in successfully!</h1>
   </div>
 </template>
 
@@ -128,6 +131,7 @@ const verifyPassword = () => {
     Verify()
     console.log(Check())
   } else {
+    alert('Incorrect username or password!')
   }
 }
 </script>

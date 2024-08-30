@@ -10,8 +10,13 @@ export function Verify() {
   isAuthenticated.value = true
 }
 
+export function Logout() {
+  isAuthenticated.value = false
+  alert('You have logged out successfully.')
+}
+
 export function Check() {
-  return isAuthenticated
+  return isAuthenticated.value
 }
 
 const routes = [
@@ -30,6 +35,7 @@ const routes = [
       if (isAuthenticated.value) {
         next()
       } else {
+        alert('Access denied')
         next(false)
       }
     }
